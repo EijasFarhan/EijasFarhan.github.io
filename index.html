@@ -1,162 +1,233 @@
 <!DOCTYPE html>
-<!-- oss-template-2026:placeholder （この目印で，scripts/check.sh が「準備中」のページかどうかを見分けます） -->
-<!--
-  テンプレートの「準備中」のページです．
-  このページが https://ユーザー名.github.io/ に表示されたら，GitHub Pages の設定は成功です．
-  第7回の実習4で，このファイルを第6回で作った index.html に置きかえます．
--->
 <html lang="ja">
 <head>
+  <!-- 文字コードをUTF-8に設定 -->
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>準備中</title>
+  <!-- スマートフォンで画面幅に合わせて表示するための設定 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>eijasfarhan のポートフォリオ</title>
   <style>
-    /* ===== 色の設定 ===== */
+    /* ===== 色の設定（レトロゲーム風） ===== */
     :root {
-      --main-color: #2e7d32;  /* メインの色（見出し・番号） */
-      --bg-color: #f5f8f5;    /* ページの背景の色 */
-      --card-color: #ffffff;  /* カードの背景の色 */
-      --text-color: #222222;  /* 文字の色 */
-      --sub-color: #666666;   /* 補足の文字の色 */
-      --line-color: #dfe6df;  /* 区切り線の色 */
+      --bg-color: #1b1b3a;      /* ページの背景色（深い紺色） */
+      --box-color: #000000;     /* ウィンドウの背景色（黒） */
+      --border-color: #ffffff;  /* ウィンドウの枠線（白） */
+      --text-color: #ffffff;    /* 文字の色（白） */
+      --yellow: #ffd23f;        /* 強調色（黄色） */
+      --green: #3bceac;         /* 強調色（緑） */
+      --pink: #ee4266;          /* 強調色（ピンク） */
     }
 
-    /* パソコンやスマートフォンがダークモードのときの色 */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --main-color: #81c784;
-        --bg-color: #121512;
-        --card-color: #1e231e;
-        --text-color: #e8ece8;
-        --sub-color: #a0a8a0;
-        --line-color: #2f362f;
-      }
+    /* ===== ページ全体の基本設定 ===== */
+    * {
+      box-sizing: border-box; /* 余白を含めてサイズを計算する */
+      margin: 0;
+      padding: 0;
     }
 
-    /* ページ全体：カードを画面のまんなかに置く */
     body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 16px;
-      box-sizing: border-box;
-      font-family: "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
-      line-height: 1.8;
+      background-color: var(--bg-color);
+      /* 背景に細かいドット模様をつけて，ゲーム画面っぽくする */
+      background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 8px 8px;
       color: var(--text-color);
-      background: var(--bg-color);
+      font-family: "DotGothic16", "MS Gothic", "Osaka-Mono", monospace; /* 等幅フォントでドット感を出す */
+      line-height: 1.8;
+      padding: 32px 16px;
     }
 
-    /* まんなかのカード */
-    main {
-      width: 100%;
-      max-width: 600px;
-      padding: 32px 28px;
-      background: var(--card-color);
-      border-top: 6px solid var(--main-color);
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    /* ===== 中央にまとめるための入れ物 ===== */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
     }
 
-    h1 {
-      margin: 0 0 4px;
-      font-size: clamp(1.3rem, 6vw, 1.6rem);  /* スマートフォンでは少し小さくする */
-      line-height: 1.4;
-      color: var(--main-color);
+    /* ===== ゲームのウィンドウ風の箱 ===== */
+    .window {
+      background-color: var(--box-color);
+      border: 4px solid var(--border-color);
+      border-radius: 8px;
+      box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.6); /* 影をずらして，ドット絵っぽい立体感を出す */
+      padding: 24px;
+      margin-bottom: 28px;
     }
 
-    h2 {
-      margin: 28px 0 8px;
-      padding-bottom: 4px;
+    /* ===== タイトル画面（名前とキャッチコピー） ===== */
+    .title-screen {
+      text-align: center;
+      padding: 40px 24px;
+    }
+
+    .press-start {
+      color: var(--green);
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+    }
+
+    .name {
+      font-size: 2.2rem;
+      color: var(--yellow);
+      text-shadow: 4px 4px 0 var(--pink); /* ずらした影で，レトロなロゴ風にする */
+      word-break: break-all;   /* 長い名前でもはみ出さないようにする */
+    }
+
+    .catch {
+      margin-top: 20px;
       font-size: 1.05rem;
-      border-bottom: 1px solid var(--line-color);
     }
 
-    /* 「設定は成功」のバッジ */
-    .badge {
-      display: inline-block;
-      margin: 8px 0 0;
-      padding: 2px 12px;
-      font-size: 0.9rem;
-      font-weight: bold;
-      color: var(--card-color);
-      background: var(--main-color);
-      border-radius: 999px;
+    /* ===== ステータス画面（基本情報） ===== */
+    .status {
+      list-style: none;
     }
 
-    /* 「次にやること」の番号つきリスト */
-    ol {
-      margin: 0;
-      padding-left: 1.4em;
-    }
-    li {
-      margin-bottom: 6px;
-    }
-    li::marker {
-      font-weight: bold;
-      color: var(--main-color);
+    .status li {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px dashed #444; /* 点線で項目を区切る */
+      padding: 8px 0;
     }
 
-    /* コマンドの見た目 */
-    code {
-      padding: 1px 6px;
-      font-family: "SFMono-Regular", Consolas, monospace;
-      font-size: 0.88em;
-      background: var(--bg-color);
-      border-radius: 4px;
-      white-space: nowrap;  /* コマンドの途中で折り返さない */
+    .status .label {
+      color: var(--green);
     }
 
-    /* 補足の小さな文字 */
-    .sub {
-      font-size: 0.9rem;
-      color: var(--sub-color);
+    /* ===== セクションの見出し ===== */
+    h2 {
+      font-size: 1.1rem;
+      color: var(--yellow);
+      margin-bottom: 16px;
     }
 
-    /* いちばん下の小さな文字 */
+    /* 見出しの前に「▶」をつけて，ゲームのメニュー風にする */
+    h2::before {
+      content: "▶ ";
+      color: var(--pink);
+    }
+
+    /* ===== アイテム一覧（趣味・プログラミング経験） ===== */
+    .items {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); /* 画面幅に合わせて自動で並べる */
+      gap: 12px;
+    }
+
+    .items li {
+      border: 2px solid var(--border-color);
+      padding: 10px;
+      text-align: center;
+    }
+
+    /* アイテムの前に「★」をつける */
+    .items li::before {
+      content: "★ ";
+      color: var(--yellow);
+    }
+
+    /* ===== セリフ風のメッセージ ===== */
+    .message {
+      font-size: 1.05rem;
+    }
+
+    /* メッセージの最後に「▼」をつけて，会話の続きがあるように見せる */
+    .message::after {
+      content: " ▼";
+      color: var(--green);
+    }
+
+    /* ===== 最後のひとこと ===== */
+    .last-word {
+      font-size: 1.3rem;
+      color: var(--yellow);
+      text-align: center;
+    }
+
+    /* ===== フッター ===== */
     footer {
-      margin-top: 28px;
-      padding-top: 12px;
+      text-align: center;
       font-size: 0.8rem;
-      color: var(--sub-color);
-      border-top: 1px solid var(--line-color);
+      color: #aaaaaa;
+      margin-top: 12px;
     }
-    a {
-      color: var(--main-color);
+
+    /* ===== スマートフォン向けの調整（画面幅600px以下） ===== */
+    @media (max-width: 600px) {
+      body {
+        padding: 20px 12px;
+      }
+      .name {
+        font-size: 1.7rem;
+      }
+      .window {
+        padding: 18px;
+      }
+      .items {
+        grid-template-columns: repeat(2, 1fr); /* スマホでは2列にする */
+      }
     }
   </style>
 </head>
 <body>
-  <main>
-    <h1>このサイトは準備中です</h1>
-    <p class="badge">GitHub Pages の設定 OK</p>
-    <p>このページが表示されていれば，あなたのリポジトリは正しく公開されています．
-      あとは，このページを自分のサイトに置きかえるだけです．</p>
+  <div class="container">
 
-    <h2>次にやること</h2>
-    <ol>
-      <li>このリポジトリを，SSHのURLで <code>git clone</code> する</li>
-      <li><code>index.html</code> を，第6回で作ったサイトに置きかえる</li>
-      <li><code>bash scripts/check.sh</code> で，公開前のチェックをする</li>
-      <li><code>git add</code> → <code>git commit</code> → <code>git push origin main</code> する</li>
-      <li>数分待ってから，このページを再読み込みする</li>
-    </ol>
-    <p class="sub">再読み込みしても変わらないときは，強制再読み込み（Windows：Ctrl + F5，Mac：Command + Shift + R）を試しましょう．</p>
+    <!-- ===== タイトル画面：名前とキャッチコピー ===== -->
+    <header class="window title-screen">
+      <p class="press-start">PLAYER 1</p>
+      <h1 class="name">eijasfarhan</h1>
+      <p class="catch">毎日バレーボールをやってほしい</p>
+    </header>
 
-    <h2>公開する前に</h2>
-    <ul>
-      <li>本名のフルネーム・学籍番号・住所・電話番号・メールアドレスが入っていないか</li>
-      <li>自己紹介に書いていないことを，AIが付け足していないか</li>
-    </ul>
-    <p class="sub">このリポジトリは Public です．サイトだけでなく，ファイルの中身やコミットの履歴も，誰でも見ることができます．</p>
+    <main>
+      <!-- ===== ステータス：基本情報 ===== -->
+      <section class="window">
+        <h2>ステータス</h2>
+        <ul class="status">
+          <li><span class="label">なまえ</span><span>eijasfarhan</span></li>
+          <li><span class="label">がくねん</span><span>4年</span></li>
+          <li><span class="label">しょぞく</span><span>拓殖大学工学部</span></li>
+        </ul>
+      </section>
 
+      <!-- ===== 趣味・好きなこと ===== -->
+      <section class="window">
+        <h2>趣味・好きなこと</h2>
+        <ul class="items">
+          <li>ゲーム</li>
+          <li>バレーボール</li>
+          <li>寝る</li>
+        </ul>
+      </section>
+
+      <!-- ===== プログラミング経験 ===== -->
+      <section class="window">
+        <h2>プログラミング経験</h2>
+        <ul class="items">
+          <li>Python</li>
+          <li>Java</li>
+          <li>C++</li>
+          <li>C</li>
+        </ul>
+      </section>
+
+      <!-- ===== この授業で学びたいこと ===== -->
+      <section class="window">
+        <h2>この授業で学びたいこと</h2>
+        <p class="message">OSS と GitHub について学びたいです</p>
+      </section>
+
+      <!-- ===== ひとこと ===== -->
+      <section class="window">
+        <h2>ひとこと</h2>
+        <p class="last-word">全部のこと、最後までやろ</p>
+      </section>
+    </main>
+
+    <!-- ===== フッター ===== -->
     <footer>
-      拓殖大学工学部『オープンソースソフトウェア』2026年度<br>
-      <a href="https://github.com/tomohitoy/oss-practice-2026/blob/main-07/chap07/README.md">第7回の資料</a>
-      ・
-      <a href="https://github.com/tomohitoy/oss-template-2026">テンプレート（tomohitoy/oss-template-2026）</a>
+      <p>&copy; eijasfarhan</p>
     </footer>
-  </main>
+
+  </div>
 </body>
 </html>
